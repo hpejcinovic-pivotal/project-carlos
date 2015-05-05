@@ -23,7 +23,6 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.config.EnableIntegration;
@@ -33,13 +32,15 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.transformer.GenericTransformer;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.util.StringUtils;
+import org.springframework.xd.tuple.Tuple;
+import static org.springframework.xd.tuple.TupleBuilder.tuple;
 
 
 @Configuration
 @EnableIntegration
 public class ModuleConfiguration {
 	@Autowired
-	GenericTransformer<String,String> transformer;
+	GenericTransformer<String,Tuple> transformer;
 	
 	@Autowired
 	GenericSelector<String> selector;
@@ -57,7 +58,8 @@ public class ModuleConfiguration {
 	@Bean
 	public IntegrationFlow myFlow() {
 		return IntegrationFlows.from(this.input())
-				.transform(transformer).filter(selector)
+				.filter(selector)
+				.transform(transformer)
 				.channel(this.output())
 				.get();
 	}
@@ -68,11 +70,31 @@ public class ModuleConfiguration {
 class PrefixAndSuffixConfiguration {
 
 	@Bean
-	GenericTransformer<String, String> transformer() {
-		return new GenericTransformer<String, String>() {
+	GenericTransformer<String, Tuple> transformer() {
+		return new GenericTransformer<String, Tuple>() {
 			@Override
-			public String transform(String payload) {
-				return payload;
+			public Tuple transform(String payload) {
+				
+				String items[] = StringUtils.delimitedListToStringArray(payload, ",");
+				
+				Tuple tuple = tuple().put("medallion", items[0])
+								     .put("hack_licence", items[1])
+								     .put("pickup_datetime", items[2])
+								     .put("dropoff_datetime", items[3])
+								     .put("trip_tim_in_secs", items[4])
+								     .put("trip_distance", items[5])
+								     .put("pickup_longitude", items[6])
+								     .put("dropoff_longitude", items[7])
+								     .put("dropoff_latitude", items[8])
+								     .put("payment_type", items[9])
+								     .put("fare_amount", items[10])
+								     .put("surcharge", items[11])
+								     .put("mta_tax", items[12])
+								     .put("tip_amount", items[13])
+								     .put("tolls_amount", items[14])
+								     .put("total_amount", items[15])
+								     .build();
+				return tuple;
 			}
 		};
 	}

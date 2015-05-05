@@ -15,20 +15,19 @@
  */
 package com.acme;
 
-import static org.junit.Assert.*;
-import static org.springframework.xd.dirt.test.process.SingleNodeProcessingChainSupport.*;
+import static org.junit.Assert.assertEquals;
+import static org.springframework.xd.dirt.test.process.SingleNodeProcessingChainSupport.chain;
 
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.springframework.xd.dirt.plugins.ModuleConfigurationException;
 import org.springframework.xd.dirt.server.SingleNodeApplication;
 import org.springframework.xd.dirt.test.SingleNodeIntegrationTestSupport;
 import org.springframework.xd.dirt.test.SingletonModuleRegistry;
 import org.springframework.xd.dirt.test.process.SingleNodeProcessingChain;
 import org.springframework.xd.module.ModuleType;
 import org.springframework.xd.test.RandomConfigurationSupport;
+import org.springframework.xd.tuple.Tuple;
 
 
 /**
@@ -74,9 +73,12 @@ public class ExampleModuleIntegrationTest {
 
 		chain = chain(application, streamName, processingChainUnderTest);
 
-		chain.sendPayload("hello");
-		String result = (String) chain.receivePayload(RECEIVE_TIMEOUT);
-		assertEquals("hello", result);
+		chain.sendPayload("07290D3599E7A0D62097A346EFCC1FB5,E7750A37CAB07D0DFF0AF7E3573AC141,01/01/13 00:00,01/01/13 00:02,120,0.44,-73.956528,40.716976,-73.96244,40.715008,CSH,3.5,0.5,0.5,0,0,4.5");
+		Tuple result = (Tuple) chain.receivePayload(RECEIVE_TIMEOUT);
+		assertEquals("07290D3599E7A0D62097A346EFCC1FB5", result.getString("medallion"));
+		assertEquals("E7750A37CAB07D0DFF0AF7E3573AC141", result.getString("hack_licence"));
+		assertEquals("-73.956528", result.getString("pickup_longitude"));
+		
 	}
 	
 	/**
