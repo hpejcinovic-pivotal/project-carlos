@@ -6,10 +6,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="processor" class="com.acme.TopTags">
-        <constructor-arg index="0" value="${timeWindow}"/>
-        <constructor-arg index="1" value="${topN}"/>
-    </bean>
+    <bean id="processor" class="com.pivotal.projcarlos.sprinxd.module.DayTransformation"/>
 
 
     <!-- The rest is boilerplate that XD 1.1 RC1 will avoid you having to provide -->
