@@ -67,7 +67,7 @@ public class ModuleConfiguration {
 
 @Configuration
 @Profile({"use-both","default"})
-class PrefixAndSuffixConfiguration {
+class TaxiRideConfiguration {
 
 	@Bean
 	GenericTransformer<String, Tuple> transformer() {
@@ -84,15 +84,16 @@ class PrefixAndSuffixConfiguration {
 								     .put("trip_tim_in_secs", items[4])
 								     .put("trip_distance", items[5])
 								     .put("pickup_longitude", items[6])
-								     .put("dropoff_longitude", items[7])
-								     .put("dropoff_latitude", items[8])
-								     .put("payment_type", items[9])
-								     .put("fare_amount", items[10])
-								     .put("surcharge", items[11])
-								     .put("mta_tax", items[12])
-								     .put("tip_amount", items[13])
-								     .put("tolls_amount", items[14])
-								     .put("total_amount", items[15])
+								     .put("pickup_latitude", items[7])
+								     .put("dropoff_longitude", items[8])
+								     .put("dropoff_latitude", items[9])
+								     .put("payment_type", items[10])
+								     .put("fare_amount", items[11])
+								     .put("surcharge", items[12])
+								     .put("mta_tax", items[13])
+								     .put("tip_amount", items[14])
+								     .put("tolls_amount", items[15])
+								     .put("total_amount", items[16])
 								     .build();
 				return tuple;
 			}
