@@ -1,18 +1,20 @@
 package latlong;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import latlong.carlos.util.LatLong;
 import latlong.carlos.util.LatLongUtil;
 
 import org.junit.Test;
 
-public class TestLatLongUtil {
+public class TestLatLongUtilTest {
 
 	@Test
 	public void testLongLatValidation() {
 
-		assertTrue(null == LatLongUtil.calcCellId(new LatLong(41.477182779, -74.913585)));
-		assertTrue(null == LatLongUtil.calcCellId(new LatLong(42, -74.913585)));
+		assertFalse(null == LatLongUtil.calcCellId(new LatLong(41.477182779, -74.913585)));
+		assertFalse(null == LatLongUtil.calcCellId(new LatLong(42, -74.913585)));
 	}
 	
 
