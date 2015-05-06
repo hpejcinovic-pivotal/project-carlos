@@ -8,7 +8,6 @@
 
     <bean id="processor" class="com.pivotal.projcarlos.sprinxd.module.DayTransformation"/>
 
-
     <!-- The rest is boilerplate that XD 1.1 RC1 will avoid you having to provide -->
 
     <int:channel id="input"/>
