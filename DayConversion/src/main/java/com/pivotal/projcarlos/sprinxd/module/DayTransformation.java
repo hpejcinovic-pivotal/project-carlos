@@ -30,7 +30,7 @@ public class DayTransformation implements Processor<Tuple, Tuple> {
     private static Tuple transformDate(Tuple tuple) {
         List<Object> values = new ArrayList<>(tuple.getValues());
         List<String> fieldNames = new ArrayList<>(tuple.getFieldNames());
-        Date date = getDateFromString("dropoff_datetime");
+        Date date = getDateFromString(tuple.getString("dropoff_datetime"));
         fieldNames.add("dayOfWeek");
         values.add(getDayOfWeek(date));
         return TupleBuilder.tuple().ofNamesAndValues(fieldNames, values);
