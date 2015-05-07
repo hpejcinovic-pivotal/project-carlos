@@ -20,7 +20,7 @@ The project's [pom][] declares `spring-xd-module-parent` as its parent. This add
 
 The uber-jar will be in `[project build dir]/module-1.0.0.BUILD-SNAPSHOT.jar`. To install and register the module to your Spring XD distribution, use the `module upload` Spring XD shell command. Start Spring XD and the shell:
 
-	$ module upload --file path-to/module-1.0.0.BUILD-SNAPSHOT.jar --name taxiCleanser --type processor
+	$ module upload --file path-to/cleanser-module-1.0.0.BUILD-SNAPSHOT.jar --name taxiCleanser --type processor
 
 
 Now create and deploy a stream:
