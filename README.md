@@ -22,5 +22,8 @@ Create and deploy the stream
     
     xd:>stream create --name taxiStuff --definition "reactor-ip | cleanser | dayTransformer | latlong |  log" --deploy
 
+From a separate termingal stream the file input into nc
+
+    cat 'path to file'/sorted_data.csv | nc localhost 3000
 
 
