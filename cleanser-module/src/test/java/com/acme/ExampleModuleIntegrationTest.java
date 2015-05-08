@@ -73,7 +73,7 @@ public class ExampleModuleIntegrationTest {
 
 		chain = chain(application, streamName, processingChainUnderTest);
 
-		chain.sendPayload("07290D3599E7A0D62097A346EFCC1FB5,E7750A37CAB07D0DFF0AF7E3573AC141,01/01/13 00:00,01/01/13 00:02,120,0.44,-73.956528,40.716976,-73.96244,40.715008,CSH,3.5,0.5,0.5,0,0,4.5");
+		chain.sendPayload("07290D3599E7A0D62097A346EFCC1FB5,E7750A37CAB07D0DFF0AF7E3573AC141,2013-01-01 03:24:00,2013-01-01 00:02:00,120,0.44,-73.956528,40.716976,-73.962440,40.715008,CSH,3.50,0.50,0.50,0.00,0.00,4.50");
 		Tuple result = (Tuple) chain.receivePayload(RECEIVE_TIMEOUT);
 		assertEquals("07290D3599E7A0D62097A346EFCC1FB5", result.getString("medallion"));
 		assertEquals("E7750A37CAB07D0DFF0AF7E3573AC141", result.getString("hack_licence"));
