@@ -1,10 +1,26 @@
-## README
+Project Carlos - Taxi trips - Question 3
+============================================
 
-#####*latlong* 
-######is a utility library that can be called to work out cell height, width based on lat long, check out the unit test to see how to use it
+The project attemps to answer the Question 3 of the task.
 
-######for example
-```
-assertTrue(161 == LatLongUtil.calcCellId(new LatLong(40.752827, -74.913585)).getCellHeight());
-assertTrue(157 == LatLongUtil.calcCellId(new LatLong(40.752827, -73.973145)).getCellWidth());
-```
+
+## Deploying the stream in Spring XD
+
+Define the following variables
+
+    export LATLONG='path to where latlong module'
+    export CLEANSER='path to the cleanser module'
+    export DAY_TRANSFORMER='path to day transformer module'
+    
+Upload the modules
+    
+    xd:>module upload --file $LATLONG/target/latlong-module-1.0.0.BUILD-SNAPSHOT.jar --name latlong --type processor
+    xd:>module upload --file $CLEANSER/target/cleanser-module-1.0.0.BUILD-SNAPSHOT.jar --name cleanser --type processor
+    xd:>module upload --file $DAY_TRANSFORMER/target/day.transformation-1.0-SNAPSHOT.jar --name dayTransformer --type processor
+
+Create and deploy the stream
+    
+    xd:>stream create --name taxiStuff --definition "reactor-ip | cleanser | dayTransformer | latlong |  log" --deploy
+
+
+
