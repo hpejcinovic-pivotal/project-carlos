@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:int="http://www.springframework.org/schema/integration"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/integration
+    http://www.springframework.org/schema/integration/spring-integration.xsd">
+	<channel id="input"/>
 
-    <bean id="processor" class="com.pivotal.projcarlos.sprinxd.module.DayTransformation"/>
+	<transformer input-channel="input" output-channel="output">
+			<beans:bean class="com.pivotal.projcarlos.sprinxd.module.DayTransformation"/>
+	</transformer>
 
-    <!-- The rest is boilerplate that XD 1.1 RC1 will avoid you having to provide -->
-
-    <int:channel id="input"/>
-
-    <bean name="messageHandler" class="org.springframework.xd.reactor.BroadcasterMessageHandler">
-        <constructor-arg ref="processor"/>
-    </bean>
-
-
-    <int:service-activator input-channel="input" ref="messageHandler"
-                           output-channel="output"/>
-
-    <int:channel id="output"/>
-
-</beans>
+	<channel id="output"/>
+</beans:beans>
