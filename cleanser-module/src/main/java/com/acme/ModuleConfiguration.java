@@ -57,6 +57,8 @@ public class ModuleConfiguration {
 @Configuration
 @Profile({"use-both","default"})
 class TaxiRideConfiguration {
+	 static int recordCounter=0;
+	 static long timeAt10k_records = System.currentTimeMillis();
 
 	@Bean
 	GenericTransformer<String, Tuple> transformer() {
@@ -94,9 +96,21 @@ class TaxiRideConfiguration {
 	GenericSelector<String> select(){
 		
 		return new GenericSelector<String>() {
+			
+
+			
 			@Override
 			public boolean accept(String payload) {
+				recordCounter++;
+
 				
+				if(recordCounter % 10000 == 0){
+					long currentTime = System.currentTimeMillis();
+					System.out.println("It took to process 10k records:" + (currentTime - timeAt10k_records)/1000 );
+					timeAt10k_records = System.currentTimeMillis();
+				}
+				
+				System.out.println("Record no:" + recordCounter);
 				String items[] = StringUtils.delimitedListToStringArray(payload, ",");
 				
 				Set<Integer> skipValidationIndexes = new HashSet<Integer>((Arrays.asList(4,12,13,14,15)));
@@ -129,6 +143,7 @@ class TaxiRideConfiguration {
 		};
 		
 	}
+	
 
 	public static boolean isValidDate(String inDate) {
 		final DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:MM:ss"); //2013-01-01 00:00:00 
