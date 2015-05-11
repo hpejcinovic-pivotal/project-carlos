@@ -29,6 +29,6 @@ public class Cell {
 
     @Override
     public String toString() {
-        return "[" + cellWidth + "," + cellHeight + "]";
+        return cellWidth + "-" + cellHeight;
     }
 }
