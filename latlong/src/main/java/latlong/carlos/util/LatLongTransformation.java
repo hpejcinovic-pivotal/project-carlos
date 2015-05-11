@@ -23,6 +23,7 @@ public class LatLongTransformation implements Processor<Tuple, Tuple> {
     }
 
     private static Tuple calculateCellIds(Tuple tuple) {
+    	System.out.println("In LatLong Module recordId" + tuple.getString("record_id"));
         Double pickup_longitude = Double.parseDouble((String) tuple.getValue("pickup_longitude"));
         Double pickup_latitude = Double.parseDouble((String) tuple.getValue("pickup_latitude"));
         Double dropoff_longitude = Double.parseDouble((String) tuple.getValue("dropoff_longitude"));
