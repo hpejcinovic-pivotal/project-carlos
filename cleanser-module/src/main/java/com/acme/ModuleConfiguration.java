@@ -85,7 +85,9 @@ class TaxiRideConfiguration {
 								     .put("tip_amount", items[14])
 								     .put("tolls_amount", items[15])
 								     .put("total_amount", items[16])
+   								     .put("record_id", recordCounter)
 								     .build();
+				
 				return tuple;
 			}
 		};
