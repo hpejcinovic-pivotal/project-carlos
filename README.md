@@ -22,14 +22,14 @@ From a separate termingal stream the file input into nc
     cat 'path to file'/sorted_data.csv | nc localhost 3000
 
 
-Define external table in HAWQ
+Define external table in HAWQ to point where the Spring-XD produced result
         
         CREATE EXTERNAL TABLE taxirides(dayOfWeek varchar, pickup_datetime varchar, dropoff_datetime varchar, pickup_Cell varchar, dropoff_Cell varchar)    
         LOCATION ('pxf://192.168.177.145:50070/xd/taxiStuff/*.txt?profile=HdfsTextSimple') FORMAT 'CSV'
         LOG ERRORS INTO test_err SEGMENT REJECT LIMIT 10;
 
 
-Run the query--- this does not work yet
+Run the query in HAWQ
     
     select dayOfWeek, pickup_Cell, dropoff_Cell, count
     from
