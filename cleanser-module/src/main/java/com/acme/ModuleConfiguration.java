@@ -112,7 +112,7 @@ class TaxiRideConfiguration {
 					timeAt10k_records = System.currentTimeMillis();
 				}
 				
-				System.out.println("Record no:" + recordCounter);
+				System.out.println("In CleanserModule recordId:" + recordCounter);
 				String items[] = StringUtils.delimitedListToStringArray(payload, ",");
 				
 				Set<Integer> skipValidationIndexes = new HashSet<Integer>((Arrays.asList(4,12,13,14,15)));
