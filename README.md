@@ -15,16 +15,38 @@ Upload the modules
 
 Create and deploy the stream
     
-    xd:>stream create --name taxiStuff --definition "reactor-ip | cleanser | dayTransformer | latlong |  log" --deploy
+    xd:>stream create --name taxiStuff --definition "reactor-ip | cleanser | latlong | dayTransformer | hdfs --idleTimeout=10000 --fsUri=hdfs://name-node-ip:8020" --deploy
 
 From a separate termingal stream the file input into nc
 
     cat 'path to file'/sorted_data.csv | nc localhost 3000
 
-To refresh modules, and stream
 
-    xd:>stream destroy --name taxiStuff
-    xd:>module delete --name processor:cleanser
-    xd:>module delete --name processor:dayTransformer
-    xd:>module delete --name processor:latlong
+Define external table in HAWQ
+        
+        CREATE EXTERNAL TABLE taxirides(dayOfWeek varchar, pickup_datetime varchar, dropoff_datetime varchar, pickup_Cell varchar, dropoff_Cell varchar)    
+        LOCATION ('pxf://192.168.177.145:50070/xd/taxiStuff/*.txt?profile=HdfsTextSimple') FORMAT 'CSV'
+        LOG ERRORS INTO test_err SEGMENT REJECT LIMIT 10;
+
+
+Run the query--- this does not work yet
     
+    select dayOfWeek, pickup_Cell, dropoff_Cell, count
+    from
+    (
+	select 
+		dayOfWeek,
+		pickup_Cell,
+		dropoff_Cell,
+		count(*) as count,
+		rank() over
+		(
+			partition by dayOfWeek
+			order by count(*) desc
+		) as rank
+	        from taxirides
+	        group by pickup_Cell,
+	        dropoff_Cell,
+	        dayOfWeek
+            ) t
+    where rank <=10
