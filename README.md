@@ -39,7 +39,7 @@ Run the query--- this does not work yet
 		pickup_Cell,
 		dropoff_Cell,
 		count(*) as count,
-		rank() over
+		row_number() over
 		(
 			partition by dayOfWeek
 			order by count(*) desc
